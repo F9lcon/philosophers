@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "philo.h"
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {

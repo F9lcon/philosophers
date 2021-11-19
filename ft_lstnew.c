@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "philo.h"
 
 t_list	*ft_lstnew(void *content)
 {
