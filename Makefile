@@ -4,11 +4,6 @@ SRC		=	main.c\
 			ft_isdigit.c\
 			my_usleep.c\
 			validation.c\
-			ft_lstnew.c\
-			ft_lstadd_back.c\
-			ft_lstlast.c\
-			ft_lstclear.c\
-			ft_lstdelone.c\
 			start.c\
 
 			
@@ -34,7 +29,7 @@ clean	:
 			rm -f $(OBJ)
 
 x		: $(PROG) $(OBJ) Makefile $(HEADER)
-			./philo 4 5000 2000 3000
+			./philo 2 5000 2000 3000
 
 fclean	:	clean
 			rm -f $(PROG)

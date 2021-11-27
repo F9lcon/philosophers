@@ -10,9 +10,10 @@
 
 int main(int argc, char **argv)
 {
-	long long	params[argc - 1];
+	long long	*params;
 
-	if (validation(argc, argv, params) != 0)
+	params = NULL;
+	if (validation(argc, argv, &params) != 0)
 		{
 			printf("params error\n");
 			return (-1);

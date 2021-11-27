@@ -3,13 +3,14 @@
 void	print_message(int phil_number, char *msg, t_table *table)
 {
 	long long	current_all;
-	
 
+	pthread_mutex_lock(&table->print_pause);
 	if (gettimeofday(&table->time_el, NULL) != 0)
 		printf("gettimeofdat in print_message fucked\n");
 	current_all = table->time_el.tv_sec * 1000000 + table->time_el.tv_usec;
-	printf("%lldms %2d is %s\n", (current_all - table->time_start) / 1000,
+	printf("%lld %2d is %s\n", (current_all - table->time_start) / 1000,
 			phil_number, msg);
+	pthread_mutex_unlock(&table->print_pause);
 }
 
 void	sleep_philo(t_table *table, t_philosopher *philosopher)
@@ -18,60 +19,41 @@ void	sleep_philo(t_table *table, t_philosopher *philosopher)
 	my_usleep(table->time_to_sleep * 1000);
 }
 
-int	find_entry(t_philosopher *philosopher,
-			t_entry entry_arr[], pthread_mutex_t *entry_point)
+void	set_last_time_eat(t_philosopher *philosopher, t_table *table)
 {
-	int		i;
+	struct timeval	time_el;
 
-	i = 0;
-	while (i < 4)
-	{
-		if (entry_arr[i].left_fork == philosopher->left_fork
-		|| entry_arr[i].right_fork == philosopher->right_fork
-		|| entry_arr[i].left_fork == philosopher->right_fork
-		|| entry_arr[i].right_fork == philosopher->left_fork)
-		{
-			*entry_point = entry_arr->point;
-			return (0);
-		}
-		i++;
-	}
-	return (-1);
+	if (gettimeofday(&time_el, NULL) != 0)
+		printf("gettimeofdat in get_last_time_eat fucked\n");
+	philosopher->last_eat = (time_el.tv_sec * 1000000 + time_el.tv_usec
+		- table->time_start) / 1000;
 }
 
-void	eat(t_table *table, t_philosopher *philosopher,
-			pthread_mutex_t	entry_point)
+void	eat(t_table *table, t_philosopher *philosopher)
 {
-// 	if (pthread_mutex_lock(&entry_point) != 0)
-// 	{
-// 		printf("lock entry fail\n");
-// 		return ;
-// 	}
-	(void) entry_point;
-	pthread_mutex_lock(&table->entry_point);
-	if (pthread_mutex_lock(&(table->forks[philosopher->left_fork])) != 0)
-	{
-		printf("lock left fork fail\n");
-		return ;
-	}
 
+	if (philosopher->number % 2)
+	{
+		
+		pthread_mutex_lock(&(table->forks[philosopher->left_fork]));
+		print_message(philosopher->number, "has taken a fork", table);
+		pthread_mutex_lock(&(table->forks[philosopher->right_fork]));
+		print_message(philosopher->number, "has taken a fork", table);
+	}
+	else 
+	{
+		pthread_mutex_lock(&(table->forks[philosopher->right_fork]));
+		print_message(philosopher->number, "has taken a fork", table);
+		pthread_mutex_lock(&(table->forks[philosopher->left_fork]));
+		print_message(philosopher->number, "has taken a fork", table);
+	}
 	print_message(philosopher->number, "eating", table);
 	my_usleep(table->time_to_eat * 1000);
 	
-	if (pthread_mutex_lock(&(table->forks[philosopher->right_fork])) != 0)
-	{
-		printf("lock right fork fail\n");
-		return ;
-	}
-	pthread_mutex_unlock(&table->entry_point);
-
-
 	pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 	pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
-	// pthread_mutex_unlock(&entry_point);
-
-
-	my_usleep(100);
+	set_last_time_eat(philosopher, table);
+	my_usleep(50);
 }
 
 void	*routin(void *arg)
@@ -79,46 +61,38 @@ void	*routin(void *arg)
 	t_philosopher_args	*philosopher_args;
 	t_philosopher		*philosopher;
 	t_table				*table;
-	pthread_mutex_t		entry_point;
-
-	
 
 	philosopher_args = (t_philosopher_args*) arg;
 	philosopher = (t_philosopher*) philosopher_args->philosopher;
 	table = (t_table*) philosopher_args->table;
-	if (find_entry(philosopher, table->entry_arr, &entry_point) == -1)
-		{
-			printf("we fucked in find entry\n");
-			return (NULL);
-		}
 
-	while (1)
-		{
-			eat(table, philosopher, entry_point);
+	// while (1)
+	// 	{
+			print_message(philosopher->number, "thinking", table);
+			eat(table, philosopher);
 			// sleep_philo(table, philosopher);
-			// print_message(philosopher->number, "thinking", table);
-		}
+		// }
 	return (NULL);
 }
 
 void	start(long long *params)
 {
-	pthread_t			threads[params[0]];
-	pthread_mutex_t		fork_arr[params[0]];
-	t_philosopher		philosophers[params[0]];
-	t_philosopher_args	arguments[params[0]];
-	t_entry				entry_arr[params[0]];
-	t_table				table; // arr of mutex
+	pthread_t			*threads;
+	t_philosopher		*philosophers;
+	t_philosopher_args	*arguments;
+	t_table				table;
 	int					i;
 
-
-	// set arr of philosophers
-	table.entry_arr = entry_arr;
+	threads = malloc(params[0] * sizeof(pthread_t));
 	table.forks = malloc(params[0] * sizeof(pthread_mutex_t));
-	table.forks = fork_arr;
-	init_philosophers(philosophers, params, entry_arr);
-	// set arr of mutex
-	init_table(&table, params, entry_arr);
+	philosophers = malloc(params[0] * sizeof(t_philosopher));
+	arguments = malloc(params[0] * sizeof(t_philosopher_args));
+	if (!threads || !table.forks || !philosophers || !arguments)
+		{
+			printf("fuck up with malloc in start\n");
+			return ;
+		}
+	init_philosophers(philosophers, params);
 	i = 0;
 	while (i < params[0])
 	{
@@ -126,29 +100,21 @@ void	start(long long *params)
 		arguments[i].table = &table;
 		i++;
 	}
-
+	init_table(&table, params);
 	i = 0;
 	while (i < params[0])
 	{
-		if (pthread_create(threads + i, NULL, &routin, arguments + i) != 0)
-		{
-			printf("thread create fucked\n");
-			return ;
-		}
+		pthread_create(threads + i, NULL, &routin, arguments + i);
 		i++;
 	}
 	i = 0;
 	while (i < params[0])
 	{
-		if (pthread_join(threads[i], NULL) != 0)
-		{
-			printf("thread join fucked\n");
-			return ;
-		}
+		printf("%d\n", i);
+		pthread_join(threads[i], NULL);
 		i++;
 	}
-
-	destroy_mutex(&table, params, entry_arr);
+	exit_routin(arguments, params, threads);
 
 	return ;
 }
