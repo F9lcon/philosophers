@@ -6,10 +6,10 @@
 
 typedef struct	s_philosopher
 {
-	int			number;
-	unsigned	left_fork;
-	unsigned	right_fork;
-	long long	last_eat;
+	int				number;
+	unsigned		left_fork;
+	unsigned		right_fork;
+	long long		last_eat_mcs;
 }				t_philosopher;
 
 typedef struct s_fork_data
@@ -20,11 +20,15 @@ typedef struct s_fork_data
 typedef struct	s_table
 {
 	pthread_mutex_t	*forks;
+	int				number_of_philo;
 	pthread_mutex_t	print_pause;
 	struct timeval	time_el;
-	long long 		time_start;
+	int				all_alive;
+	long long 		time_start_mcs;
 	long long		time_to_eat;
 	long long		time_to_sleep;
+	long long		time_to_die;
+	pthread_t		*threads;
 }					t_table;
 
 typedef struct	s_philosopher_args
@@ -37,11 +41,13 @@ void		init_table(t_table *table, long long params[]);
 void		exit_routin(t_philosopher_args *args, long long *params, pthread_t *threads);
 void		my_usleep(long long microseconds);
 int			validation(int argc, char **argv, long long **params);
-void		start(long long *params);
+void		serv_manager(long long *params);
+void		waiter_start(t_philosopher_args* arguments);
+void		set_last_time_eat(t_philosopher *philosopher, t_table *table);
 long long	ft_atoi(const char *s);
 int			ft_isdigit(int c);
-
+void		print_message(int phil_number, char *msg, t_table *table);
+t_philosopher_args	*create_args(long long *params);
 // void		init_philosopher(t_philosopher *philosopher, int number,
 // 		unsigned left_fork, unsigned right_fork);
-void	init_philosophers(t_philosopher *philosophers,
-			long long *params);
+			
