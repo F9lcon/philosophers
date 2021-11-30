@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	init_table(t_table *table, long long params[])
+void	init_table(t_table *table, long long *params)
 {
 	int	i;
 
@@ -21,31 +21,10 @@ void	init_table(t_table *table, long long params[])
 				+ table->time_el.tv_usec;
 	table->all_alive = 1;
 	table->number_of_philo = params[0];
-
-}
-
-void exit_routin(t_philosopher_args *args, long long *params, pthread_t *threads)
-{
-	t_table			*table;
-	t_philosopher	*philosophers;
-	int				i;
-
-	i = 0;
-	table = args->table;
-	philosophers = args->philosopher;
-	while (i < params[0])
-	{
-		pthread_mutex_destroy(table->forks + i); 
-		i++;
-	}
-
-	pthread_mutex_destroy(&table->print_pause);
-	free(table->forks);
-	free(table);
-	free(philosophers);
-	free(threads);
-	free(params);
-	free(args);
+	if (params[4] != -1)
+		table->times_to_eat = params[4];
+	else
+		table->times_to_eat = -1;
 }
 
 
@@ -58,24 +37,12 @@ void	init_philosophers(t_philosopher *philosophers,
 	while (i < params[0])
 	{
 		(&philosophers[i])->number = i + 1;
+		(&philosophers[i])->can_eat = 1;
 		(&philosophers[i])->left_fork = i;
 		if (i + 1 == params[0])
 			(&philosophers[i])->right_fork = 0;
 		else
 			(&philosophers[i])->right_fork = i + 1;
-		i++;
-	}
-}
-
-void detach_thread(t_philosopher_args* arguments)
-{
-	int	i;
-
-	i = 0;
-	printf("detach\n");
-	while (i < arguments->table->number_of_philo)
-	{
-		pthread_join(arguments->table->threads[i], NULL);
 		i++;
 	}
 }
@@ -86,15 +53,23 @@ void	waiter_start(t_philosopher_args* arguments)
 	struct timeval	time_el;
 	long long		current_time_mcs;
 	t_philosopher	*philosopher;
+	int				is_one_alive;
 
-	while (1)
+	is_one_alive = 1;
+	while (1 && is_one_alive)
 	{
 		i = 0;
-		while (i < arguments->table->number_of_philo)
+		is_one_alive = 0;
+		usleep(1000);
+		gettimeofday(&time_el, NULL);
+		while (i < arguments->table->number_of_philo) 
 		{
 			philosopher = (arguments + i)->philosopher;
-			usleep(100);
-			gettimeofday(&time_el, NULL);
+			if (!philosopher->can_eat)
+			{
+				i++;
+				continue ;
+			}
 			current_time_mcs = (time_el.tv_sec * 1000000 + time_el.tv_usec
 				- arguments->table->time_start_mcs);
 			if ((current_time_mcs - philosopher->last_eat_mcs)
@@ -107,6 +82,7 @@ void	waiter_start(t_philosopher_args* arguments)
 				return ;
 			}
 			i++;
+			is_one_alive = 1;
 		}
 	}
 }

@@ -15,6 +15,6 @@ void my_usleep(long long microseconds)
 		gettimeofday(&time, NULL);
 		current = time.tv_sec * 1000000 + time.tv_usec;
 		i++;
-		usleep(100);
+		usleep(1000);
 	}
 }

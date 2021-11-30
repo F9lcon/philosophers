@@ -24,6 +24,8 @@ int main(int argc, char **argv)
 }
 
 
+/*TODO waiter have to know when all philo is done eating*/
+
 
 // number_of_philosophers_and_forks 
 // time_to_die

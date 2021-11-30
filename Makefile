@@ -5,6 +5,7 @@ SRC		=	main.c\
 			my_usleep.c\
 			validation.c\
 			start.c\
+			utils.c
 
 			
 OBJ		=	$(SRC:.c=.o)
@@ -29,7 +30,7 @@ clean	:
 			rm -f $(OBJ)
 
 x		: $(PROG) $(OBJ) Makefile $(HEADER)
-			./philo 5 800 200 200
+			./philo 4 410 200 200 1
 
 fclean	:	clean
 			rm -f $(PROG)
