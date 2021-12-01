@@ -1,13 +1,17 @@
-#include "philo.h"
+#include "../philo.h"
 
-void	print_message(int phil_number, char *msg, t_table *table)
+void	print_message(int phil_number, char *msg, t_table *table, int isFinish)
 {
 	long long	current_time;
 
 	pthread_mutex_lock(&table->print_pause);
 	gettimeofday(&table->time_el, NULL);
 	current_time = table->time_el.tv_sec * 1000000 + table->time_el.tv_usec;
-	printf("%lld %d %s\n", (current_time - table->time_start_mcs) / 1000,
+	if (isFinish)
+		printf("%lld %s\n", (current_time - table->time_start_mcs) / 1000,
+		"Everyone finish with meal\n");
+	else
+		printf("%lld %d %s\n", (current_time - table->time_start_mcs) / 1000,
 			phil_number, msg);
 	pthread_mutex_unlock(&table->print_pause);
 }
@@ -19,27 +23,6 @@ void	set_last_time_eat(t_philosopher *philosopher, t_table *table)
 	gettimeofday(&time_el, NULL);
 	philosopher->last_eat_mcs = (time_el.tv_sec * 1000000 + time_el.tv_usec
 		- table->time_start_mcs);
-}
-
-void *waiter_routing(void *arg)
-{
-	t_philosopher_args	*arguments;
-
-	arguments = (t_philosopher_args *) arg;
-	waiter_start(arguments);
-	return (NULL);
-}
-
-void detach_thread(t_philosopher_args* arguments)
-{
-	int	i;
-
-	i = 0;
-	while (i < arguments->table->number_of_philo)
-	{
-		pthread_detach(arguments->table->threads[i]);
-		i++;
-	}
 }
 
 void exit_routin(t_philosopher_args *args, long long *params, pthread_t *threads)

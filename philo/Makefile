@@ -1,11 +1,12 @@
 SRC		=	main.c\
 			init.c\
-			ft_atoi.c\
-			ft_isdigit.c\
-			my_usleep.c\
+			utils/ft_atoi.c\
+			utils/ft_isdigit.c\
+			utils/my_usleep.c\
 			validation.c\
-			start.c\
-			utils.c
+			serv_manager.c\
+			utils/utils.c\
+			life_controller.c
 
 			
 OBJ		=	$(SRC:.c=.o)

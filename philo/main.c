@@ -14,17 +14,11 @@ int main(int argc, char **argv)
 
 	params = NULL;
 	if (validation(argc, argv, &params) != 0)
-		{
-			printf("params error\n");
-			return (-1);
-		}
-
+			return (1);
 	serv_manager(params);
 	return (0);	
 }
 
-
-/*TODO waiter have to know when all philo is done eating*/
 
 
 // number_of_philosophers_and_forks 

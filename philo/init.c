@@ -47,46 +47,6 @@ void	init_philosophers(t_philosopher *philosophers,
 	}
 }
 
-void	waiter_start(t_philosopher_args* arguments)
-{
-	int				i;
-	struct timeval	time_el;
-	long long		current_time_mcs;
-	t_philosopher	*philosopher;
-	int				is_one_alive;
-
-	is_one_alive = 1;
-	while (1 && is_one_alive)
-	{
-		i = 0;
-		is_one_alive = 0;
-		usleep(1000);
-		gettimeofday(&time_el, NULL);
-		while (i < arguments->table->number_of_philo) 
-		{
-			philosopher = (arguments + i)->philosopher;
-			if (!philosopher->can_eat)
-			{
-				i++;
-				continue ;
-			}
-			current_time_mcs = (time_el.tv_sec * 1000000 + time_el.tv_usec
-				- arguments->table->time_start_mcs);
-			if ((current_time_mcs - philosopher->last_eat_mcs)
-					/ 1000 > (arguments + i)->table->time_to_die)
-			{
-				(arguments + i)->table->all_alive = 0;
-				print_message(philosopher->number, "died", arguments->table);
-				pthread_mutex_lock(&arguments->table->print_pause);
-				detach_thread(arguments);
-				return ;
-			}
-			i++;
-			is_one_alive = 1;
-		}
-	}
-}
-
 t_philosopher_args	*create_args(long long *params)
 {
 	t_philosopher		*philosophers;

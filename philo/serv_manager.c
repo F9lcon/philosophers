@@ -1,26 +1,27 @@
 #include "philo.h"
 
+void take_forks(t_table *table, t_philosopher *philosopher,
+		int first, int second)
+{
+	pthread_mutex_lock(&(table->forks[first]));
+	print_message(philosopher->number, "has taken a fork", table, 0);
+	pthread_mutex_lock(&(table->forks[second]));
+	print_message(philosopher->number, "has taken a fork", table, 0);
+}
+
 void	eat(t_table *table, t_philosopher *philosopher)
 {
 	my_usleep(100);
 	if (philosopher->number % 2)
-	{
-		pthread_mutex_lock(&(table->forks[philosopher->left_fork]));
-		print_message(philosopher->number, "has taken a fork", table);
-		pthread_mutex_lock(&(table->forks[philosopher->right_fork]));
-		print_message(philosopher->number, "has taken a fork", table);
-	}
+		take_forks(table, philosopher, philosopher->left_fork,
+			philosopher->right_fork);
 	else 
-	{
-		pthread_mutex_lock(&(table->forks[philosopher->right_fork]));
-		print_message(philosopher->number, "has taken a fork", table);
-		pthread_mutex_lock(&(table->forks[philosopher->left_fork]));
-		print_message(philosopher->number, "has taken a fork", table);
-	}
+		take_forks(table, philosopher, philosopher->right_fork,
+			philosopher->left_fork);
 	set_last_time_eat(philosopher, table);
-	print_message(philosopher->number, "is eating", table);
+	print_message(philosopher->number, "is eating", table, 0);
 	my_usleep(table->time_to_eat * 1000);
-	if (!philosopher->number % 2)
+	if (philosopher->number % 2)
 	{
 		pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 		pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
@@ -51,9 +52,9 @@ void	*routin(void *arg)
 			if (i >= table->times_to_eat)
 				break ;
 		}
-		print_message(philosopher->number, "is thinking", table);
+		print_message(philosopher->number, "is thinking", table, 0);
 		eat(table, philosopher);
-		print_message(philosopher->number, "is sleeping", table);
+		print_message(philosopher->number, "is sleeping", table, 0);
 		my_usleep(table->time_to_sleep * 1000);
 		i++;
 	}
@@ -79,7 +80,7 @@ void	serv_manager(long long *params)
 		pthread_create(threads + i, NULL, &routin, arguments + i);
 		i++;
 	}
-	pthread_create(&waiter_thread, NULL, &waiter_routing, arguments);
+	pthread_create(&waiter_thread, NULL, &life_controller_thread, arguments);
 	i = 0;
 	pthread_join(waiter_thread, NULL);
 	while (i < params[0])
@@ -88,6 +89,5 @@ void	serv_manager(long long *params)
 		i++;
 	}
 	exit_routin(arguments, params, threads);
-
 	return ;
 }
