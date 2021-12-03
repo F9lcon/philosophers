@@ -31,7 +31,7 @@ clean	:
 			rm -f $(OBJ)
 
 x		: $(PROG) $(OBJ) Makefile $(HEADER)
-			./philo 3 310 100 100 5
+			./philo 3 305 100 100
 
 fclean	:	clean
 			rm -f $(PROG)

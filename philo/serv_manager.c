@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/03 21:00:47 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/03 22:01:37 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	take_forks(t_table *table, t_philosopher *philosopher,
 
 void	eat(t_table *table, t_philosopher *philosopher)
 {
+	my_usleep(150);
+
 	if (philosopher->number % 2)
 		take_forks(table, philosopher, philosopher->left_fork,
 			philosopher->right_fork);
@@ -42,7 +44,6 @@ void	eat(t_table *table, t_philosopher *philosopher)
 		pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
 		pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 	}
-	my_usleep(100);
 }
 
 void	*routin(void *arg)
