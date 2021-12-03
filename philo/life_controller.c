@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   life_controller.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
+/*   Updated: 2021/12/03 21:12:47 by namina           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void detach_thread(t_philosopher_args* arguments)
+void	detach_thread(t_philosopher_args *arguments)
 {
 	int	i;
 
@@ -12,7 +24,7 @@ void detach_thread(t_philosopher_args* arguments)
 	}
 }
 
-int	check_philo(struct timeval *time_el, t_philosopher_args* arguments)
+int	check_philo(struct timeval *time_el, t_philosopher_args *arguments)
 {
 	long long		current_time_mcs;
 	t_philosopher	*philosopher;
@@ -21,8 +33,9 @@ int	check_philo(struct timeval *time_el, t_philosopher_args* arguments)
 	philosopher = arguments->philosopher;
 	table = arguments->table;
 	current_time_mcs = (time_el->tv_sec * 1000000 + time_el->tv_usec
-				- table->time_start_mcs);
-	if ((current_time_mcs - philosopher->last_eat_mcs) / 1000 > table->time_to_die)
+			- table->time_start_mcs);
+	if ((current_time_mcs - philosopher->last_eat_mcs)
+		/ 1000 > table->time_to_die)
 	{
 		table->all_alive = 0;
 		print_message(philosopher->number, "died", arguments->table, 0);
@@ -33,7 +46,7 @@ int	check_philo(struct timeval *time_el, t_philosopher_args* arguments)
 	return (0);
 }
 
-void	life_controller(t_philosopher_args* arguments)
+void	life_controller(t_philosopher_args *arguments)
 {
 	int				i;
 	struct timeval	time_el;
@@ -46,7 +59,7 @@ void	life_controller(t_philosopher_args* arguments)
 		is_one_alive = 0;
 		usleep(1000);
 		gettimeofday(&time_el, NULL);
-		while (i < arguments->table->number_of_philo) 
+		while (i < arguments->table->number_of_philo)
 		{
 			if (((arguments + i)->philosopher)->can_eat)
 			{
@@ -60,7 +73,7 @@ void	life_controller(t_philosopher_args* arguments)
 	print_message(0, NULL, arguments->table, 1);
 }
 
-void *life_controller_thread(void *arg)
+void	*life_controller_thread(void *arg)
 {
 	t_philosopher_args	*arguments;
 

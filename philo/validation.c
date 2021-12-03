@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 19:13:57 by namina            #+#    #+#             */
+/*   Updated: 2021/12/03 20:54:26 by namina           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-int check_params(int *params, int argc)
+int	check_params(int *params, int argc)
 {
 	int	i;
 
@@ -18,18 +30,18 @@ int check_params(int *params, int argc)
 	return (0);
 }
 
-int validation(int argc, char **argv, int **params)
+int	validation(int argc, char **argv, int **params)
 {
 	int			i;
 	long long	temp_value;
 
 	i = 0;
 	if (argc < 5 || argc > 6)
-		{
-			printf("For simulation need 4 or 5 arguments\n");
-			return (-1);
-		}
-	*params = malloc((argc - 1) * sizeof(int));
+	{
+		printf("For simulation need 4 or 5 arguments\n");
+		return (-1);
+	}
+	*params = malloc(6 * sizeof(int));
 	while (*argv)
 	{
 		temp_value = ft_atoi(*argv);
@@ -37,7 +49,6 @@ int validation(int argc, char **argv, int **params)
 			(*params)[i] = 2147483647;
 		else
 			(*params)[i] = temp_value;
-		printf("param %d\n", (*params)[i]);
 		i++;
 		argv++;
 	}

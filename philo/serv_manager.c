@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   serv_manager.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
+/*   Updated: 2021/12/03 21:00:47 by namina           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void take_forks(t_table *table, t_philosopher *philosopher,
+void	take_forks(t_table *table, t_philosopher *philosopher,
 		int first, int second)
 {
 	pthread_mutex_lock(&(table->forks[first]));
@@ -14,13 +26,13 @@ void	eat(t_table *table, t_philosopher *philosopher)
 	if (philosopher->number % 2)
 		take_forks(table, philosopher, philosopher->left_fork,
 			philosopher->right_fork);
-	else 
+	else
 		take_forks(table, philosopher, philosopher->right_fork,
 			philosopher->left_fork);
 	set_last_time_eat(philosopher, table);
 	print_message(philosopher->number, "is eating", table, 0);
 	my_usleep(table->time_to_eat * 1000);
-	if (philosopher->number % 2)
+	if (!(philosopher->number % 2))
 	{
 		pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 		pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
@@ -30,6 +42,7 @@ void	eat(t_table *table, t_philosopher *philosopher)
 		pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
 		pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 	}
+	my_usleep(100);
 }
 
 void	*routin(void *arg)
@@ -40,8 +53,8 @@ void	*routin(void *arg)
 	int					i;
 
 	i = 0;
-	philosopher_args = (t_philosopher_args*) arg;
-	philosopher = (t_philosopher*) philosopher_args->philosopher;
+	philosopher_args = (t_philosopher_args *) arg;
+	philosopher = (t_philosopher *) philosopher_args->philosopher;
 	table = (t_table *) philosopher_args->table;
 	set_last_time_eat(philosopher, table);
 	while (1)
@@ -68,7 +81,9 @@ void	serv_manager(int *params)
 	t_philosopher_args	*arguments;
 	int					i;
 
-	arguments = create_args(params);
+	create_args(params, &arguments);
+	if (!arguments)
+		return ;
 	threads = malloc(params[0] * sizeof(pthread_t));
 	if (!threads)
 		return ;
@@ -83,10 +98,7 @@ void	serv_manager(int *params)
 	i = 0;
 	pthread_join(waiter_thread, NULL);
 	while (i < params[0])
-	{
-		pthread_join(threads[i], NULL);
-		i++;
-	}
+		pthread_join(threads[i++], NULL);
 	exit_routin(arguments, params, threads);
 	return ;
 }

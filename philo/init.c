@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/03 19:14:02 by namina            #+#    #+#             */
+/*   Updated: 2021/12/03 21:03:27 by namina           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	init_table(t_table *table, int *params)
@@ -5,7 +17,6 @@ void	init_table(t_table *table, int *params)
 	int	i;
 
 	i = 0;
-
 	while (i < params[0])
 	{
 		pthread_mutex_init(table->forks + i, NULL);
@@ -15,10 +26,9 @@ void	init_table(t_table *table, int *params)
 	table->time_to_eat = params[2];
 	table->time_to_sleep = params[3];
 	pthread_mutex_init(&table->print_pause, NULL);
-	if (gettimeofday(&table->time_el, NULL) != 0)
-		printf("gettimeofday in init_table fucked\n");
+	gettimeofday(&table->time_el, NULL);
 	table->time_start_mcs = table->time_el.tv_sec * 1000000
-				+ table->time_el.tv_usec;
+		+ table->time_el.tv_usec;
 	table->all_alive = 1;
 	table->number_of_philo = params[0];
 	if (params[4] != -1)
@@ -26,7 +36,6 @@ void	init_table(t_table *table, int *params)
 	else
 		table->times_to_eat = -1;
 }
-
 
 void	init_philosophers(t_philosopher *philosophers, int *params)
 {
@@ -46,31 +55,56 @@ void	init_philosophers(t_philosopher *philosophers, int *params)
 	}
 }
 
-t_philosopher_args	*create_args(int *params)
+void	free_memory(t_philosopher *philosophers, t_table *table,
+		t_philosopher_args	*arguments)
+{
+	if (philosophers)
+		free(philosophers);
+	if (table)
+		free(table);
+	if (table && (table)->forks)
+		free(table->forks);
+	if (arguments)
+		free(arguments);
+}
+
+int	set_memory(int size, t_philosopher **philosophers, t_table **table,
+	t_philosopher_args **arguments)
+{
+	*philosophers = NULL;
+	*table = NULL;
+	*arguments = NULL;
+	*table = malloc(sizeof(t_table));
+	(*table)->forks = malloc(size * sizeof(pthread_mutex_t));
+	*philosophers = malloc(size * sizeof(t_philosopher));
+	*arguments = malloc(size * sizeof(t_philosopher_args));
+	if (!*table || !(*table)->forks || !*philosophers || !*arguments)
+	{
+		printf("Malloc error\n");
+		free_memory(*philosophers, *table, *arguments);
+		return (1);
+	}
+	return (0);
+}
+
+void	create_args(int *params, t_philosopher_args **arguments)
 {
 	t_philosopher		*philosophers;
 	t_table				*table;
 	int					i;
-	t_philosopher_args	*arguments;
 
-	table = malloc(sizeof(t_table));
-	table->forks = malloc(params[0] * sizeof(pthread_mutex_t));
-	philosophers = malloc(params[0] * sizeof(t_philosopher));
-	arguments = malloc(params[0] * sizeof(t_philosopher_args));
-	if (!table || !table->forks || !philosophers || !arguments)
+	if (set_memory(params[0], &philosophers, &table, arguments))
 	{
-		printf("fuck up with malloc in start\n");
-		// add free func
-		return (NULL);
+		*arguments = NULL;
+		return ;
 	}
 	init_philosophers(philosophers, params);
 	i = 0;
 	while (i < params[0])
 	{
-		(arguments + i)->philosopher = &philosophers[i];
-		(arguments + i)->table = table;
+		((*arguments) + i)->philosopher = &philosophers[i];
+		((*arguments) + i)->table = table;
 		i++;
 	}
 	init_table(table, params);
-	return (arguments);
 }

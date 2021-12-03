@@ -1,2 +1,4 @@
 philo.dSYM/
 *.o
+.DS_Store
+philo/.DS_Store
