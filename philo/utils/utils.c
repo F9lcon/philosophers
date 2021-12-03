@@ -25,7 +25,7 @@ void	set_last_time_eat(t_philosopher *philosopher, t_table *table)
 		- table->time_start_mcs);
 }
 
-void exit_routin(t_philosopher_args *args, long long *params, pthread_t *threads)
+void exit_routin(t_philosopher_args *args, int *params, pthread_t *threads)
 {
 	t_table			*table;
 	t_philosopher	*philosophers;

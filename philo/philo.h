@@ -27,9 +27,9 @@ typedef struct	s_table
 	struct timeval	time_el;
 	int				all_alive;
 	long long 		time_start_mcs;
-	long long		time_to_eat;
-	long long		time_to_sleep;
-	long long		time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				time_to_die;
 	pthread_t		*threads;
 }					t_table;
 
@@ -41,17 +41,17 @@ typedef struct	s_philosopher_args
 
 void		detach_thread(t_philosopher_args* arguments);
 void		*life_controller_thread(void *arg);
-void		init_table(t_table *table, long long params[]);
-void		exit_routin(t_philosopher_args *args, long long *params, pthread_t *threads);
-void		my_usleep(long long microseconds);
-int			validation(int argc, char **argv, long long **params);
-void		serv_manager(long long *params);
+void		init_table(t_table *table, int params[]);
+void		exit_routin(t_philosopher_args *args, int *params, pthread_t *threads);
+void		my_usleep(int microseconds);
+int			validation(int argc, char **argv, int **params);
+void		serv_manager(int *params);
 void		life_controller(t_philosopher_args* arguments);
 void		set_last_time_eat(t_philosopher *philosopher, t_table *table);
 long long	ft_atoi(const char *s);
 int			ft_isdigit(int c);
 void		print_message(int phil_number, char *msg, t_table *table, int isFinish);
-t_philosopher_args	*create_args(long long *params);
+t_philosopher_args	*create_args(int *params);
 // void		init_philosopher(t_philosopher *philosopher, int number,
 // 		unsigned left_fork, unsigned right_fork);
 			

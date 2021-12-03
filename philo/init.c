@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	init_table(t_table *table, long long *params)
+void	init_table(t_table *table, int *params)
 {
 	int	i;
 
@@ -28,8 +28,7 @@ void	init_table(t_table *table, long long *params)
 }
 
 
-void	init_philosophers(t_philosopher *philosophers,
-		long long *params)
+void	init_philosophers(t_philosopher *philosophers, int *params)
 {
 	int	i;
 
@@ -47,7 +46,7 @@ void	init_philosophers(t_philosopher *philosophers,
 	}
 }
 
-t_philosopher_args	*create_args(long long *params)
+t_philosopher_args	*create_args(int *params)
 {
 	t_philosopher		*philosophers;
 	t_table				*table;

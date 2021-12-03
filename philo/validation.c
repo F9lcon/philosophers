@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int check_params(long long *params, int argc)
+int check_params(int *params, int argc)
 {
 	int	i;
 
@@ -18,9 +18,10 @@ int check_params(long long *params, int argc)
 	return (0);
 }
 
-int validation(int argc, char **argv, long long **params)
+int validation(int argc, char **argv, int **params)
 {
-	int	i;
+	int			i;
+	long long	temp_value;
 
 	i = 0;
 	if (argc < 5 || argc > 6)
@@ -28,11 +29,15 @@ int validation(int argc, char **argv, long long **params)
 			printf("For simulation need 4 or 5 arguments\n");
 			return (-1);
 		}
-	*params = malloc((argc - 1) * sizeof(long long));
-	argv++;
+	*params = malloc((argc - 1) * sizeof(int));
 	while (*argv)
 	{
-		(*params)[i] = ft_atoi(*argv);
+		temp_value = ft_atoi(*argv);
+		if (temp_value > 2147483647)
+			(*params)[i] = 2147483647;
+		else
+			(*params)[i] = temp_value;
+		printf("param %d\n", (*params)[i]);
 		i++;
 		argv++;
 	}

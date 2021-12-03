@@ -10,10 +10,10 @@
 
 int main(int argc, char **argv)
 {
-	long long	*params;
+	int	*params;
 
 	params = NULL;
-	if (validation(argc, argv, &params) != 0)
+	if (validation(argc, argv + 1, &params) != 0)
 			return (1);
 	serv_manager(params);
 	return (0);	

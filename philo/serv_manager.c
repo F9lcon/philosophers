@@ -11,7 +11,6 @@ void take_forks(t_table *table, t_philosopher *philosopher,
 
 void	eat(t_table *table, t_philosopher *philosopher)
 {
-	my_usleep(100);
 	if (philosopher->number % 2)
 		take_forks(table, philosopher, philosopher->left_fork,
 			philosopher->right_fork);
@@ -62,7 +61,7 @@ void	*routin(void *arg)
 	return (NULL);
 }
 
-void	serv_manager(long long *params)
+void	serv_manager(int *params)
 {
 	pthread_t			*threads;
 	pthread_t			waiter_thread;

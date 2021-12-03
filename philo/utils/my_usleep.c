@@ -1,6 +1,6 @@
 #include "../philo.h"
 
-void my_usleep(long long microseconds)
+void my_usleep(int microseconds)
 {
 	struct timeval	time;
 	long long		start;
@@ -15,6 +15,6 @@ void my_usleep(long long microseconds)
 		gettimeofday(&time, NULL);
 		current = time.tv_sec * 1000000 + time.tv_usec;
 		i++;
-		usleep(1000);
+		usleep(50);
 	}
 }
