@@ -3,6 +3,11 @@ SRC		=	main.c\
 			utils/ft_atoi.c\
 			utils/ft_isdigit.c\
 			utils/my_usleep.c\
+			utils/ft_itoa.c\
+			utils/ft_strjoin.c\
+			utils/ft_strlcat.c\
+			utils/ft_strlen.c\
+			utils/ft_strlcpy.c\
 			validation.c\
 			serv_manager.c\
 			utils/utils.c\
@@ -30,8 +35,8 @@ $(PROG)	:	$(OBJ) Makefile $(HEADER)
 clean	:
 			rm -f $(OBJ)
 
-x		: $(PROG) $(OBJ) Makefile $(HEADER)
-			./philo 3 305 100 100
+x		: $(PROG) $(OBJ)
+			./philo 1 500 100 100
 
 fclean	:	clean
 			rm -f $(PROG)

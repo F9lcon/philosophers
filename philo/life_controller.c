@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
-/*   Updated: 2021/12/03 21:12:47 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/04 14:59:52 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	life_controller(t_philosopher_args *arguments)
 	{
 		i = 0;
 		is_one_alive = 0;
-		usleep(1000);
+		usleep(50);
 		gettimeofday(&time_el, NULL);
 		while (i < arguments->table->number_of_philo)
 		{

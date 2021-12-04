@@ -6,26 +6,46 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:18 by namina            #+#    #+#             */
-/*   Updated: 2021/12/03 20:52:33 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/04 17:57:17 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
+// void	print_message(int phil_number, char *msg, t_table *table, int isFinish)
+// {
+// 	long long	current_time;
+
+// 	pthread_mutex_lock(&table->print_pause);
+// 	gettimeofday(&table->time_el, NULL);
+// 	current_time = table->time_el.tv_sec * 1000000 + table->time_el.tv_usec;
+// 	if (isFinish)
+// 		printf("%lld %s\n", (current_time - table->time_start_mcs) / 1000,
+// 			"Everyone finish with meal\n");
+// 	else
+// 		printf("%lld %d %s\n", (current_time - table->time_start_mcs) / 1000,
+// 			phil_number, msg);
+// 	pthread_mutex_unlock(&table->print_pause);
+// }
+
 void	print_message(int phil_number, char *msg, t_table *table, int isFinish)
 {
+	char		*str;
 	long long	current_time;
 
+	isFinish++;
+	current_time = table->time_el.tv_sec * 1000000 + table->time_el.tv_usec;
 	pthread_mutex_lock(&table->print_pause);
 	gettimeofday(&table->time_el, NULL);
-	current_time = table->time_el.tv_sec * 1000000 + table->time_el.tv_usec;
-	if (isFinish)
-		printf("%lld %s\n", (current_time - table->time_start_mcs) / 1000,
-			"Everyone finish with meal\n");
-	else
-		printf("%lld %d %s\n", (current_time - table->time_start_mcs) / 1000,
-			phil_number, msg);
+	str = ft_itoa(current_time - table->time_start_mcs);
+	str = ft_strjoin(str, " ");
+	str = ft_strjoin(str, ft_itoa(phil_number));
+	str = ft_strjoin(str, " ");
+	str = ft_strjoin(str, msg);
+	str = ft_strjoin(str, "\n");
+	write(1, str, ft_strlen(str));
 	pthread_mutex_unlock(&table->print_pause);
+	free(str);
 }
 
 void	set_last_time_eat(t_philosopher *philosopher, t_table *table)
