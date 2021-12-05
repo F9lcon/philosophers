@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:57 by namina            #+#    #+#             */
-/*   Updated: 2021/12/03 21:18:29 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/05 15:09:16 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,9 @@ int	validation(int argc, char **argv, int **params)
 	long long	temp_value;
 
 	i = 0;
-	if (argc < 5 || argc > 6)
-	{
-		printf("For simulation need 4 or 5 arguments\n");
-		return (-1);
-	}
 	*params = malloc(6 * sizeof(int));
+	if (!params)
+		return (1);
 	while (*argv)
 	{
 		temp_value = ft_atoi(*argv);

@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:02 by namina            #+#    #+#             */
-/*   Updated: 2021/12/03 21:03:27 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/05 15:10:26 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	set_memory(int size, t_philosopher **philosophers, t_table **table,
 	*arguments = malloc(size * sizeof(t_philosopher_args));
 	if (!*table || !(*table)->forks || !*philosophers || !*arguments)
 	{
-		printf("Malloc error\n");
 		free_memory(*philosophers, *table, *arguments);
 		return (1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:40 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 11:03:41 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/05 15:41:11 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,7 @@ char		*ft_strjoin(char *s1, char *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t		ft_strlen(const char *s);
+void		*routin(void *arg);
+int			start_thread(int *params, t_philosopher_args *arguments,
+				pthread_t *threads);
 #endif

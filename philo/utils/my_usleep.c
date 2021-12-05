@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:35 by namina            #+#    #+#             */
-/*   Updated: 2021/12/04 16:08:38 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/05 12:56:03 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	my_usleep(int microseconds)
 		gettimeofday(&time, NULL);
 		current = time.tv_sec * 1000000 + time.tv_usec;
 		i++;
-		usleep(50);
+		usleep(900);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/04 15:59:51 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/05 15:42:45 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	take_forks(t_table *table, t_philosopher *philosopher,
 		int first, int second)
 {
 	if (philosopher->number == 1 && table->number_of_philo % 2)
-		usleep(100);
+		usleep(4);
 	pthread_mutex_lock(&(table->forks[first]));
 	print_message(philosopher->number, "has taken a fork", table, 0);
 	pthread_mutex_lock(&(table->forks[second]));
@@ -26,14 +26,14 @@ void	take_forks(t_table *table, t_philosopher *philosopher,
 void	eat(t_table *table, t_philosopher *philosopher)
 {
 	if (philosopher->number % 2)
+	{
+		usleep(900);
 		take_forks(table, philosopher, philosopher->left_fork,
 			philosopher->right_fork);
+	}
 	else
-	{
-		usleep(500);
 		take_forks(table, philosopher, philosopher->right_fork,
 			philosopher->left_fork);
-	}
 	set_last_time_eat(philosopher, table);
 	print_message(philosopher->number, "is eating", table, 0);
 	my_usleep(table->time_to_eat * 1000);
@@ -49,13 +49,13 @@ void	eat(t_table *table, t_philosopher *philosopher)
 	}
 }
 
-int is_done_eating(t_table *table, int i)
+int	is_done_eating(t_table *table, int i)
 {
 	if (table->times_to_eat != -1)
-		{
-			if (i >= table->times_to_eat)
-				return (1);
-		}
+	{
+		if (i >= table->times_to_eat)
+			return (1);
+	}
 	return (0);
 }
 
@@ -90,9 +90,7 @@ void	*routin(void *arg)
 void	serv_manager(int *params)
 {
 	pthread_t			*threads;
-	pthread_t			waiter_thread;
 	t_philosopher_args	*arguments;
-	int					i;
 
 	create_args(params, &arguments);
 	if (!arguments)
@@ -101,17 +99,7 @@ void	serv_manager(int *params)
 	if (!threads)
 		return ;
 	arguments->table->threads = threads;
-	i = 0;
-	while (i < params[0])
-	{
-		pthread_create(threads + i, NULL, &routin, arguments + i);
-		i++;
-	}
-	pthread_create(&waiter_thread, NULL, &life_controller_thread, arguments);
-	i = 0;
-	pthread_join(waiter_thread, NULL);
-	while (i < params[0])
-		pthread_join(threads[i++], NULL);
+	start_thread(params, arguments, threads);
 	exit_routin(arguments, params, threads);
 	return ;
 }
