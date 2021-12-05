@@ -36,7 +36,7 @@ clean	:
 			rm -f $(OBJ)
 
 x		: $(PROG) $(OBJ)
-			./philo 1 500 100 100
+			./philo 140 410 200 200
 
 fclean	:	clean
 			rm -f $(PROG)
