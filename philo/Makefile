@@ -18,7 +18,7 @@ OBJ		=	$(SRC:.c=.o)
 PROG	=	philo
 # LIB		=	$(LIBDIR)/libft.a
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g -pthread
+CFLAGS	=	-Wall -Wextra -Werror -pthread
 HEADER	=	philo.h
 
 .PHONY	:	all re clean fclean x
