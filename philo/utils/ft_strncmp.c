@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 21:10:01 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 16:56:05 by aleksandr        ###   ########.fr       */
+/*   Created: 2021/10/12 16:30:31 by aalannys          #+#    #+#             */
+/*   Updated: 2021/12/12 17:13:14 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "../philo.h"
 
-int	main(int argc, char **argv)
+int	ft_strncmp(char const *s1, char const *s2, size_t n)
 {
-	int	*params;
+	size_t			i;
+	unsigned char	a;
+	unsigned char	b;
 
-	params = NULL;
-	if (argc < 5 || argc > 6)
+	i = 0;
+	while ((s1[i] || s2[i]) && i < n)
 	{
-		printf("For simulation need 4 or 5 arguments\n");
-		return (-1);
+		a = (unsigned char)s1[i];
+		b = (unsigned char)s2[i];
+		if (a - b)
+		{
+			return (a - b);
+		}
+		i++;
 	}
-	if (validation(argc, argv + 1, &params) != 0)
-		return (1);
-	serv_manager(params);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 13:01:52 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/12 17:12:19 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	check_philo(struct timeval *time_el, t_philosopher_args *arguments)
 	{
 		table->all_alive = 0;
 		print_message(philosopher->number, "died", arguments->table, 0);
-		pthread_mutex_lock(&arguments->table->print_pause);
 		detach_thread(arguments);
 		return (1);
 	}

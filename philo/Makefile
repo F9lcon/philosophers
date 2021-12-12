@@ -8,6 +8,7 @@ SRC		=	main.c\
 			utils/ft_strlcat.c\
 			utils/ft_strlen.c\
 			utils/ft_strlcpy.c\
+			utils/ft_strncmp.c\
 			validation.c\
 			serv_manager.c\
 			utils/utils.c\

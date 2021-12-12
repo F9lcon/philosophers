@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:18 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 16:08:49 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/12 17:11:46 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	print_message(int phil_number, char *msg, t_table *table, int isFinish)
 	}
 	pthread_mutex_lock(&table->print_pause);
 	write(1, str, ft_strlen(str));
-	pthread_mutex_unlock(&table->print_pause);
+	if (ft_strncmp(msg, "died", 4))
+		pthread_mutex_unlock(&table->print_pause);
 	if (str)
 		free(str);
 	if (number_str)
@@ -53,30 +54,29 @@ void	set_last_time_eat(t_philosopher *philosopher, t_table *table)
 void	exit_routin(t_philosopher_args *args, int *params, pthread_t *threads)
 {
 	t_table			*table;
-	t_philosopher	*philosophers;
 	int				i;
 
 	i = 0;
+	if (!args)
+		return ;
 	table = args->table;
-	philosophers = args->philosopher;
-	while (i < params[0])
-	{
-		pthread_mutex_destroy(table->forks + i);
-		i++;
-	}
-	pthread_mutex_destroy(&table->print_pause);
-	if (table)
-		free(table);
-	if (table->forks)
+	if (table && params)
+	{	
+		while (i < params[0])
+		{
+			pthread_mutex_destroy(table->forks + i);
+			i++;
+		}
+		pthread_mutex_destroy(&table->print_pause);
 		free(table->forks);
-	if (philosophers)
-		free(philosophers);
-	if (threads)
-		free(threads);
-	if (params)
+		free(table);
 		free(params);
-	if (args)
-		free(args);
+	}	
+	if (args->philosopher)
+		free(args->philosopher);
+	if (threads)
+		free(threads);	
+	free(args);
 }
 
 int	start_thread(int *params, t_philosopher_args *arguments,

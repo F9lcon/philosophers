@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:40 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 16:21:41 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/12 16:57:51 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,13 @@
 
 # define PRINT_PAUSE "print_pause"
 # define FORKS "forks"
+
 typedef struct s_philosopher
 {
 	int				number;
-	unsigned int	left_fork;
-	unsigned int	right_fork;
 	long long		last_eat_mcs;
 	int				can_eat;
 }					t_philosopher;
-
-typedef struct s_fork_data
-{
-	pthread_mutex_t	mutex;
-}					t_fork_data;
 
 typedef struct s_table
 {

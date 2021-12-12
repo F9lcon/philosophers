@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:18 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 16:23:11 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/12 17:03:09 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,24 @@ void	exit_routin(t_philosopher_args *args, int *params, int *pids)
 {
 	t_table			*table;
 	t_philosopher	*philosophers;
-	int				i;
 
-	i = 0;
-	table = args->table;
-	philosophers = args->philosopher;
-	sem_close(table->print_pause);
-	unlink(PRINT_PAUSE);
-	sem_close(table->forks);
-	unlink(FORKS);
-	if (table)
-		free(table);
-	if (pids)
-		free(pids);
-	if (philosophers)
-		free(philosophers);
 	if (params)
 		free(params);
-	if (args)
-		free(args);
+	if (pids)
+		free(pids);
+	if (!args)
+		return ;
+	table = args->table;
+	if (table)
+	{
+		sem_close(table->print_pause);
+		unlink(PRINT_PAUSE);
+		sem_close(table->forks);
+		unlink(FORKS);
+		free(table);
+	}
+	philosophers = args->philosopher;
+	if (philosophers)
+		free(philosophers);
+	free(args);
 }
