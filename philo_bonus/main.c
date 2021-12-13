@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:10:01 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 16:56:05 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/13 20:05:11 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		printf("For simulation need 4 or 5 arguments\n");
-		return (-1);
+		return (1);
 	}
 	if (validation(argc, argv + 1, &params) != 0)
 		return (1);

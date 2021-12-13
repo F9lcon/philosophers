@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:57 by namina            #+#    #+#             */
-/*   Updated: 2021/12/07 21:04:34 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/13 20:06:13 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	validation(int argc, char **argv, int **params)
 	long long	temp_value;
 
 	i = 0;
-	*params = malloc(6 * sizeof(int));
+	*params = malloc(argc * sizeof(int));
 	if (!params)
 		return (1);
 	while (*argv)

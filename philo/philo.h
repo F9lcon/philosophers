@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:40 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 17:13:25 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/13 19:20:13 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void		life_controller(t_philosopher_args *arguments);
 void		set_last_time_eat(t_philosopher *philosopher, t_table *table);
 long long	ft_atoi(const char *s);
 int			ft_isdigit(int c);
-void		print_message(int phil_number, char *msg, t_table *table,
-				int isFinish);
+void		print_message(int phil_number, char *msg, t_table *table);
 void		create_args(int *params, t_philosopher_args **arguments);
 char		*ft_itoa(int n);
 char		*ft_strjoin(char *s1, char *s2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serv_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 15:42:45 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/13 19:21:00 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	take_forks(t_table *table, t_philosopher *philosopher,
 	if (philosopher->number == 1 && table->number_of_philo % 2)
 		usleep(4);
 	pthread_mutex_lock(&(table->forks[first]));
-	print_message(philosopher->number, "has taken a fork", table, 0);
+	print_message(philosopher->number, "has taken a fork", table);
 	pthread_mutex_lock(&(table->forks[second]));
-	print_message(philosopher->number, "has taken a fork", table, 0);
+	print_message(philosopher->number, "has taken a fork", table);
 }
 
 void	eat(t_table *table, t_philosopher *philosopher)
@@ -35,7 +35,7 @@ void	eat(t_table *table, t_philosopher *philosopher)
 		take_forks(table, philosopher, philosopher->right_fork,
 			philosopher->left_fork);
 	set_last_time_eat(philosopher, table);
-	print_message(philosopher->number, "is eating", table, 0);
+	print_message(philosopher->number, "is eating", table);
 	my_usleep(table->time_to_eat * 1000);
 	if (!(philosopher->number % 2))
 	{
@@ -75,12 +75,12 @@ void	*routin(void *arg)
 	{
 		if (is_done_eating(table, i))
 			break ;
-		print_message(philosopher->number, "is thinking", table, 0);
+		print_message(philosopher->number, "is thinking", table);
 		eat(table, philosopher);
 		i++;
 		if (is_done_eating(table, i))
 			break ;
-		print_message(philosopher->number, "is sleeping", table, 0);
+		print_message(philosopher->number, "is sleeping", table);
 		my_usleep(table->time_to_sleep * 1000);
 	}
 	philosopher->can_eat = 0;

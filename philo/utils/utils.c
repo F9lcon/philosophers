@@ -6,32 +6,29 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:18 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 17:11:46 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/13 19:22:51 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	print_message(int phil_number, char *msg, t_table *table, int isFinish)
+void	print_message(int phil_number, char *msg, t_table *table)
 {
 	char		*str;
 	char		*number_str;
 	long long	current_time;
 
+	str = NULL;
+	number_str = NULL;
 	number_str = ft_itoa(phil_number);
 	gettimeofday(&table->time_el, NULL);
 	current_time = table->time_el.tv_sec * 1000000 + table->time_el.tv_usec;
 	str = ft_itoa((current_time - table->time_start_mcs) / 1000);
 	str = ft_strjoin(str, " ");
-	if (isFinish)
-		str = ft_strjoin(str, "Everyone finish with meal\n");
-	else
-	{
-		str = ft_strjoin(str, number_str);
-		str = ft_strjoin(str, " ");
-		str = ft_strjoin(str, msg);
-		str = ft_strjoin(str, "\n");
-	}
+	str = ft_strjoin(str, number_str);
+	str = ft_strjoin(str, " ");
+	str = ft_strjoin(str, msg);
+	str = ft_strjoin(str, "\n");
 	pthread_mutex_lock(&table->print_pause);
 	write(1, str, ft_strlen(str));
 	if (ft_strncmp(msg, "died", 4))
@@ -75,7 +72,7 @@ void	exit_routin(t_philosopher_args *args, int *params, pthread_t *threads)
 	if (args->philosopher)
 		free(args->philosopher);
 	if (threads)
-		free(threads);	
+		free(threads);
 	free(args);
 }
 

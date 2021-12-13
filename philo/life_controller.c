@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 17:12:19 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/13 19:20:39 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_philo(struct timeval *time_el, t_philosopher_args *arguments)
 		/ 1000 > table->time_to_die)
 	{
 		table->all_alive = 0;
-		print_message(philosopher->number, "died", arguments->table, 0);
+		print_message(philosopher->number, "died", arguments->table);
 		detach_thread(arguments);
 		return (1);
 	}
@@ -69,7 +69,8 @@ void	life_controller(t_philosopher_args *arguments)
 			i++;
 		}
 	}
-	print_message(0, NULL, arguments->table, 1);
+	write(1, "Everyone finish with meal\n", 27);
+	pthread_mutex_lock(&arguments->table->print_pause);
 }
 
 void	*life_controller_thread(void *arg)

@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 16:07:30 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/13 20:04:22 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_philo(struct timeval *time_el, t_philosopher_args *arguments)
 	if ((current_time_mcs - philosopher->last_eat_mcs)
 		/ 1000 > table->time_to_die)
 	{
-		print_message(philosopher->number, "died", arguments->table, 0);
+		print_message(philosopher->number, "died", arguments->table);
 		exit(42);
 	}
 	return (0);
@@ -51,11 +51,7 @@ void	life_controller(t_philosopher_args *arguments)
 	{
 		usleep(2000);
 		gettimeofday(&time_el, NULL);
-		if ((arguments->philosopher)->can_eat)
-		{
-			if (check_philo(&time_el, arguments))
-				return ;
-		}
+		check_philo(&time_el, arguments);
 	}
 }
 
