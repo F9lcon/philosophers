@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/13 19:21:00 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/14 20:24:31 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ void	*routin(void *arg)
 			break ;
 		print_message(philosopher->number, "is thinking", table);
 		eat(table, philosopher);
-		i++;
-		if (is_done_eating(table, i))
-			break ;
 		print_message(philosopher->number, "is sleeping", table);
 		my_usleep(table->time_to_sleep * 1000);
+		i++;
 	}
 	philosopher->can_eat = 0;
 	return (NULL);

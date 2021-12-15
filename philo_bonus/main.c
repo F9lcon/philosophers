@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 21:10:01 by namina            #+#    #+#             */
-/*   Updated: 2021/12/13 20:05:11 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/15 18:12:27 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,3 +27,8 @@ int	main(int argc, char **argv)
 	serv_manager(params);
 	return (0);
 }
+
+
+// add to man part 
+// free philosophers array
+

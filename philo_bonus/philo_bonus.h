@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:40 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 16:57:51 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/14 19:59:30 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_philosopher
 {
 	int				number;
 	long long		last_eat_mcs;
-	int				can_eat;
 }					t_philosopher;
 
 typedef struct s_table
@@ -52,7 +51,8 @@ typedef struct s_philosopher_args
 void		detach_thread(t_philosopher_args *arguments);
 void		*life_controller_thread(void *arg);
 void		init_table(t_table *table, int params[]);
-void		exit_routin(t_philosopher_args *args, int *params, int *pids);
+void		exit_routin(t_philosopher_args *args, int *params, int *pids,
+				t_philosopher *philosophers);
 void		my_usleep(int microseconds);
 int			validation(int argc, char **argv, int **params);
 void		serv_manager(int *params);
@@ -61,7 +61,8 @@ void		set_last_time_eat(t_philosopher *philosopher, t_table *table);
 long long	ft_atoi(const char *s);
 int			ft_isdigit(int c);
 void		print_message(int phil_number, char *msg, t_table *table);
-void		create_args(int *params, t_philosopher_args **arguments);
+void		create_args(int *params, t_philosopher_args **arguments,
+				t_philosopher **philosophers);
 char		*ft_itoa(int n);
 char		*ft_strjoin(char *s1, char *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);

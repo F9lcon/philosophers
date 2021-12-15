@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:02 by namina            #+#    #+#             */
-/*   Updated: 2021/12/12 15:53:34 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/14 19:57:47 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	init_philosophers(t_philosopher *philosophers, int *params)
 	while (i < params[0])
 	{
 		(&philosophers[i])->number = i + 1;
-		(&philosophers[i])->can_eat = 1;
 		i++;
 	}
 }
@@ -72,22 +71,22 @@ int	set_memory(int size, t_philosopher **philosophers, t_table **table,
 	return (0);
 }
 
-void	create_args(int *params, t_philosopher_args **arguments)
+void	create_args(int *params, t_philosopher_args **arguments,
+			t_philosopher **philosophers)
 {
-	t_philosopher		*philosophers;
 	t_table				*table;
 	int					i;
 
-	if (set_memory(params[0], &philosophers, &table, arguments))
+	if (set_memory(params[0], philosophers, &table, arguments))
 	{
 		*arguments = NULL;
 		return ;
 	}
-	init_philosophers(philosophers, params);
+	init_philosophers(*philosophers, params);
 	i = 0;
 	while (i < params[0])
 	{
-		((*arguments) + i)->philosopher = &philosophers[i];
+		((*arguments) + i)->philosopher = &(*philosophers)[i];
 		((*arguments) + i)->table = table;
 		i++;
 	}

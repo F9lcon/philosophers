@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/13 19:45:14 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/15 18:39:26 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,48 +54,54 @@ void	philo_routin(t_philosopher_args *arguments)
 			break ;
 		print_message(philosopher->number, "is thinking", table);
 		eat(table, philosopher);
-		i++;
-		if (is_done_eating(table, i))
-			break ;
 		print_message(philosopher->number, "is sleeping", table);
 		my_usleep(table->time_to_sleep * 1000);
+		i++;
 	}
 	pthread_detach(thread);
 }
 
-void	start_processes(int *pid, t_philosopher_args *arguments)
+int	start_processes(int *pid, t_philosopher_args *arguments)
 {
 	t_table		*table;
 
 	table = (t_table *) arguments->table;
 	*pid = fork();
+	if (*pid == -1)
+		return (1);
 	if (*pid == 0)
 	{
 		philo_routin(arguments);
-		exit(0);
+		return (0);
 	}
+	return (1);
 }
 
 void	serv_manager(int *params)
 {
 	int					*pids;
 	t_philosopher_args	*arguments;
+	t_philosopher		*philosophers;
 	int					i;
 
 	i = 0;
-	create_args(params, &arguments);
+	philosophers = NULL;
+	create_args(params, &arguments, &philosophers);
 	pids = malloc(params[0]);
 	if (!pids || !arguments)
 	{
-		exit_routin(arguments, params, pids);
+		exit_routin(arguments, params, pids, philosophers);
 		return ;
 	}
 	while (i < params[0])
 	{
-		start_processes(pids + i, arguments + i);
+		if (start_processes(pids + i, arguments + i) == 0)
+		{
+			exit_routin(arguments, params, pids, philosophers);
+			exit(0);
+		}
 		i++;
 	}
 	start_wait(pids, arguments, params);
-	exit_routin(arguments, params, pids);
-	return ;
+	exit_routin(arguments, params, pids, philosophers);
 }
