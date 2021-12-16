@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 15:04:10 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 15:04:11 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:56:03 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../philo_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {

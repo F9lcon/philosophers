@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:40 by namina            #+#    #+#             */
-/*   Updated: 2021/12/14 19:59:30 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/16 18:54:33 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdlib.h>
 # include <semaphore.h>
 # include <signal.h>
-
 # define PRINT_PAUSE "print_pause"
 # define FORKS "forks"
 
@@ -71,7 +70,6 @@ size_t		ft_strlen(const char *s);
 void		*routin(void *arg);
 int			start_thread(int *params, t_philosopher_args *arguments,
 				pthread_t *threads);
-void		kill_all_process(int *pids, t_table *table);
 void		start_wait(int *pids, t_philosopher_args *arguments, int *params);
 int			ft_strncmp(char const *s1, char const *s2, size_t n);
 #endif

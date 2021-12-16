@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 15:04:19 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 15:04:20 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:55:41 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../philo_bonus.h"
 
 static int	getlen(int num)
 {

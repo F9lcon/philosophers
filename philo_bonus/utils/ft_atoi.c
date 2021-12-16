@@ -6,11 +6,11 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 22:19:01 by namina            #+#    #+#             */
-/*   Updated: 2021/12/01 20:08:47 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/16 18:55:04 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../philo_bonus.h"
 
 long long	ft_atoi(const char *s)
 {

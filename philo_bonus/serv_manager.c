@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/15 18:39:26 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/16 18:48:47 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ void	eat(t_table *table, t_philosopher *philosopher)
 	sem_post(table->forks);
 }
 
-int	is_done_eating(t_table *table, int i)
-{
-	if (table->times_to_eat != -1)
-	{
-		if (i >= table->times_to_eat)
-			return (1);
-	}
-	return (0);
-}
-
 void	philo_routin(t_philosopher_args *arguments)
 {
 	t_philosopher	*philosopher;
@@ -50,8 +40,11 @@ void	philo_routin(t_philosopher_args *arguments)
 		return ;
 	while (1)
 	{
-		if (is_done_eating(table, i))
-			break ;
+		if (table->times_to_eat != -1)
+		{
+			if (i >= table->times_to_eat)
+				break ;
+		}
 		print_message(philosopher->number, "is thinking", table);
 		eat(table, philosopher);
 		print_message(philosopher->number, "is sleeping", table);
@@ -63,7 +56,7 @@ void	philo_routin(t_philosopher_args *arguments)
 
 int	start_processes(int *pid, t_philosopher_args *arguments)
 {
-	t_table		*table;
+	t_table	*table;
 
 	table = (t_table *) arguments->table;
 	*pid = fork();

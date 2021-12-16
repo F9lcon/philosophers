@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 15:03:59 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 15:04:00 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:55:48 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../philo_bonus.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {

@@ -6,7 +6,7 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:02 by namina            #+#    #+#             */
-/*   Updated: 2021/12/14 19:57:47 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/16 18:51:09 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_table(t_table *table, int *params)
 {
 	sem_unlink(FORKS);
-	table->forks = sem_open(FORKS, O_CREAT, 777, params[0]);
+	table->forks = sem_open(FORKS, O_CREAT | O_EXCL, 777, params[0]);
 	table->time_to_die = params[1];
 	table->time_to_eat = params[2];
 	table->time_to_sleep = params[3];

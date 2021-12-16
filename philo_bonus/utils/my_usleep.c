@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   my_usleep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:35 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 12:56:03 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:55:20 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../philo_bonus.h"
 
 void	my_usleep(int microseconds)
 {

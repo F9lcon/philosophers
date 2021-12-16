@@ -6,11 +6,23 @@
 /*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:18 by namina            #+#    #+#             */
-/*   Updated: 2021/12/15 18:32:13 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/16 18:28:33 by aleksandr        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo_bonus.h"
+
+void	kill_all_process(int *pids, t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->number_of_philo)
+	{
+		kill(pids[i], SIGKILL);
+		i++;
+	}
+}
 
 void	print_message(int phil_number, char *msg, t_table *table)
 {
@@ -69,7 +81,7 @@ void	start_wait(int *pids, t_philosopher_args *arguments, int *params)
 void	exit_routin(t_philosopher_args *args, int *params, int *pids,
 			t_philosopher *philosophers)
 {
-	t_table			*table;
+	t_table	*table;
 
 	if (params)
 		free(params);
