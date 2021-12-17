@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serv_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/16 18:48:47 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/17 21:47:55 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,11 @@ void	serv_manager(int *params)
 	i = 0;
 	philosophers = NULL;
 	create_args(params, &arguments, &philosophers);
-	pids = malloc(params[0]);
-	if (!pids || !arguments)
-	{
-		exit_routin(arguments, params, pids, philosophers);
-		return ;
-	}
+	if (!arguments)
+		return (exit_routin(arguments, params, NULL, philosophers));
+	pids = malloc(params[0] * sizeof(int));
+	if (!pids)
+		return (exit_routin(arguments, params, pids, philosophers));
 	while (i < params[0])
 	{
 		if (start_processes(pids + i, arguments + i) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:02 by namina            #+#    #+#             */
-/*   Updated: 2021/12/16 18:51:09 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/17 21:29:59 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,24 @@ void	init_philosophers(t_philosopher *philosophers, int *params)
 	}
 }
 
-void	free_memory(t_philosopher *philosophers, t_table *table,
-		t_philosopher_args	*arguments)
+void	free_memory(t_philosopher **philosophers, t_table **table,
+		t_philosopher_args	**arguments)
 {
-	if (philosophers)
-		free(philosophers);
-	if (table)
-		free(table);
-	if (arguments)
-		free(arguments);
+	if (*philosophers)
+	{
+		free(*philosophers);
+		*philosophers = NULL;
+	}
+	if (*table)
+	{
+		free(*table);
+		*table = NULL;
+	}
+	if (*arguments)
+	{	
+		free(*arguments);
+		*arguments = NULL;
+	}
 }
 
 int	set_memory(int size, t_philosopher **philosophers, t_table **table,
@@ -65,7 +74,7 @@ int	set_memory(int size, t_philosopher **philosophers, t_table **table,
 	*arguments = malloc(size * sizeof(t_philosopher_args));
 	if (!*table || !*philosophers || !*arguments)
 	{
-		free_memory(*philosophers, *table, *arguments);
+		free_memory(philosophers, table, arguments);
 		return (1);
 	}
 	return (0);

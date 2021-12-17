@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:57 by namina            #+#    #+#             */
-/*   Updated: 2021/12/13 20:06:13 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/17 20:22:18 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	validation(int argc, char **argv, int **params)
 	long long	temp_value;
 
 	i = 0;
-	*params = malloc(argc * sizeof(int));
+	*params = malloc((argc - 1) * sizeof(int));
 	if (!params)
 		return (1);
 	while (*argv)

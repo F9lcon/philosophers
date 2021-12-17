@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
-/*   Updated: 2021/12/16 18:30:19 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/17 21:53:59 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	life_controller(t_philosopher_args *arguments)
 	table = arguments->table;
 	while (1)
 	{
-		usleep(5000);
+		usleep(2000);
 		gettimeofday(&time_el, NULL);
 		current_time_mcs = (time_el.tv_sec * 1000000 + time_el.tv_usec
-			- table->time_start_mcs);
+				- table->time_start_mcs);
 		if ((current_time_mcs - philosopher->last_eat_mcs)
 			/ 1000 > table->time_to_die)
 		{
