@@ -22,7 +22,7 @@ CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -pthread
 HEADER	=	philo.h
 
-.PHONY	:	all re clean fclean x
+.PHONY	:	all re clean fclean
 
 all		:	$(PROG)
 
@@ -35,9 +35,6 @@ $(PROG)	:	$(OBJ) Makefile $(HEADER)
 
 clean	:
 			rm -f $(OBJ)
-
-x		: $(PROG) $(OBJ)
-			./philo 140 410 200 200
 
 fclean	:	clean
 			rm -f $(PROG)

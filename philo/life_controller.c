@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life_controller.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:28 by namina            #+#    #+#             */
-/*   Updated: 2021/12/13 19:20:39 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/18 15:51:53 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	life_controller(t_philosopher_args *arguments)
 	{
 		i = 0;
 		is_one_alive = 0;
-		usleep(900);
+		usleep(2000);
 		gettimeofday(&time_el, NULL);
 		while (i < arguments->table->number_of_philo)
 		{

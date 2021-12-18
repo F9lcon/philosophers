@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   serv_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandr <aleksandr@student.42.fr>        +#+  +:+       +#+        */
+/*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:13:54 by namina            #+#    #+#             */
-/*   Updated: 2021/12/14 20:24:31 by aleksandr        ###   ########.fr       */
+/*   Updated: 2021/12/18 16:03:20 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	eat(t_table *table, t_philosopher *philosopher)
 	set_last_time_eat(philosopher, table);
 	print_message(philosopher->number, "is eating", table);
 	my_usleep(table->time_to_eat * 1000);
-	if (!(philosopher->number % 2))
+	if (philosopher->number % 2)
 	{
 		pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 		pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
@@ -47,16 +47,6 @@ void	eat(t_table *table, t_philosopher *philosopher)
 		pthread_mutex_unlock(&(table->forks[philosopher->right_fork]));
 		pthread_mutex_unlock(&(table->forks[philosopher->left_fork]));
 	}
-}
-
-int	is_done_eating(t_table *table, int i)
-{
-	if (table->times_to_eat != -1)
-	{
-		if (i >= table->times_to_eat)
-			return (1);
-	}
-	return (0);
 }
 
 void	*routin(void *arg)
@@ -73,8 +63,11 @@ void	*routin(void *arg)
 	set_last_time_eat(philosopher, table);
 	while (1)
 	{
-		if (is_done_eating(table, i))
-			break ;
+		if (table->times_to_eat != -1)
+		{
+			if (i >= table->times_to_eat)
+			 break ;
+		}
 		print_message(philosopher->number, "is thinking", table);
 		eat(table, philosopher);
 		print_message(philosopher->number, "is sleeping", table);

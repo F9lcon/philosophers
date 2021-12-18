@@ -6,7 +6,7 @@
 /*   By: namina <namina@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:14:02 by namina            #+#    #+#             */
-/*   Updated: 2021/12/05 15:10:26 by namina           ###   ########.fr       */
+/*   Updated: 2021/12/18 15:13:18 by namina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,26 @@ void	init_philosophers(t_philosopher *philosophers, int *params)
 	}
 }
 
-void	free_memory(t_philosopher *philosophers, t_table *table,
-		t_philosopher_args	*arguments)
+void	free_memory(t_philosopher **philosophers, t_table **table,
+		t_philosopher_args	**arguments)
 {
-	if (philosophers)
-		free(philosophers);
-	if (table)
-		free(table);
-	if (table && (table)->forks)
-		free(table->forks);
-	if (arguments)
-		free(arguments);
+	if (*philosophers)
+	{
+		free(*philosophers);
+		*philosophers = NULL;
+	}
+	if (*table && (*table)->forks)
+	{
+		free((*table)->forks);
+		(*table)->forks = NULL;
+	}
+	if (*table)
+	{
+		free(*table);
+		*table = NULL;
+	}
+	if (*arguments)
+		free(*arguments);
 }
 
 int	set_memory(int size, t_philosopher **philosophers, t_table **table,
@@ -75,12 +84,16 @@ int	set_memory(int size, t_philosopher **philosophers, t_table **table,
 	*table = NULL;
 	*arguments = NULL;
 	*table = malloc(sizeof(t_table));
-	(*table)->forks = malloc(size * sizeof(pthread_mutex_t));
+	if (*table)
+	{
+		(*table)->forks = NULL;
+		(*table)->forks = malloc(size * sizeof(pthread_mutex_t));
+	}
 	*philosophers = malloc(size * sizeof(t_philosopher));
 	*arguments = malloc(size * sizeof(t_philosopher_args));
-	if (!*table || !(*table)->forks || !*philosophers || !*arguments)
+	if (!*table || !((*table)->forks) || !*philosophers || !*arguments)
 	{
-		free_memory(*philosophers, *table, *arguments);
+		free_memory(philosophers, table, arguments);
 		return (1);
 	}
 	return (0);

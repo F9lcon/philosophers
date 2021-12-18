@@ -34,8 +34,7 @@ $(PROG)	:	$(OBJ) Makefile $(HEADER)
 clean	:
 			rm -f $(OBJ)
 
-x		: $(PROG) $(OBJ)
-			./philo_bonus 4 1000 2000 200
+bonus	: all
 
 fclean	:	clean
 			rm -f $(PROG)
